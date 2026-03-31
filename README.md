@@ -28,28 +28,37 @@ kurmai/
 
 ## Format JSON Peraturan
 
+Array of flat objects, satu object per ayat:
+
 ```json
-{
-  "metadata": {
-    "judul": "Peraturan Menteri ...",
-    "nomor": "...",
-    "tahun": 2024,
-    "tentang": "..."
+[
+  {
+    "source": "Nama Peraturan Lengkap",
+    "bab": "I",
+    "judul_bab": "KETENTUAN UMUM",
+    "pasal": "1",
+    "ayat": "0",
+    "full_context": "BAB I > KETENTUAN UMUM > Pasal 1",
+    "text": "Teks isi pasal atau ayat...",
+    "char_count": 61
   },
-  "pasal": [
-    {
-      "nomor": "1",
-      "judul": "Ketentuan Umum",
-      "ayat": [
-        {
-          "nomor": "1",
-          "teks": "..."
-        }
-      ]
-    }
-  ]
-}
+  {
+    "source": "Nama Peraturan Lengkap",
+    "bab": "I",
+    "judul_bab": "KETENTUAN UMUM",
+    "pasal": "1",
+    "ayat": "1",
+    "full_context": "BAB I > KETENTUAN UMUM > Pasal 1 > Ayat (1)",
+    "text": "Teks ayat pertama...",
+    "char_count": 294
+  }
+]
 ```
+
+Catatan:
+- `ayat: "0"` = intro pasal tanpa nomor ayat
+- `char_count` tidak wajib, hanya informatif
+- Loader akan mengelompokkan semua ayat dalam satu pasal menjadi satu Document
 
 ## Setup
 
