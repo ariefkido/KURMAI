@@ -1,19 +1,61 @@
-# 💬 Chatbot template
+# KURMAI — Chatbot Peraturan
 
-A simple Streamlit app that shows how to build a chatbot using OpenAI's GPT-3.5.
+Chatbot berbasis RAG untuk menjawab pertanyaan seputar peraturan yang telah dimuat.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://chatbot-template.streamlit.app/)
+## Struktur Project
 
-### How to run it on your own machine
+```
+kurmai/
+├── database/               # Folder peraturan (JSON)
+│   └── kur/
+│       └── peraturan.json  # Contoh: file peraturan KUR
+├── src/
+│   ├── loader.py           # Load & parse JSON peraturan
+│   ├── vectorstore.py      # Build FAISS index dari dokumen
+│   └── chain.py            # RAG chain dengan Gemini
+├── app.py                  # Streamlit UI
+├── config.py               # Konfigurasi (API key, paths, dll)
+├── requirements.txt
+└── .env                    # GEMINI_API_KEY (tidak di-commit)
+```
 
-1. Install the requirements
+## Cara Menambah Peraturan Baru
 
-   ```
-   $ pip install -r requirements.txt
-   ```
+1. Buat subfolder di `database/`, misal `database/umkm/`
+2. Taruh file JSON peraturan di sana
+3. Daftarkan di `config.py` pada `REGULATIONS` dict
+4. Restart app — index akan dibangun ulang otomatis
 
-2. Run the app
+## Format JSON Peraturan
 
-   ```
-   $ streamlit run streamlit_app.py
-   ```
+```json
+{
+  "metadata": {
+    "judul": "Peraturan Menteri ...",
+    "nomor": "...",
+    "tahun": 2024,
+    "tentang": "..."
+  },
+  "pasal": [
+    {
+      "nomor": "1",
+      "judul": "Ketentuan Umum",
+      "ayat": [
+        {
+          "nomor": "1",
+          "teks": "..."
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Setup
+
+```bash
+pip install -r requirements.txt
+cp .env.example .env
+# Isi GEMINI_API_KEY di .env
+streamlit run app.py
+```
