@@ -6,7 +6,7 @@
 import logging
 from typing import Generator
 
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.runnables import RunnablePassthrough
@@ -38,9 +38,18 @@ def _format_docs(docs: list[Document]) -> str:
     for doc in docs:
         meta = doc.metadata
         label = meta.get("label", "")
+        bab = meta.get("bab", "")
         pasal = meta.get("pasal", "")
-        source_info = f"[{label} | Pasal {pasal}]" if pasal else f"[{label}]"
-        parts.append(f"{source_info}\n{doc.page_content}")
+        judul_bab = meta.get("judul_bab", "")
+        source_parts = [label]
+        if bab:
+            source_parts.append(f"BAB {bab}")
+        if judul_bab:
+            source_parts.append(judul_bab)
+        if pasal:
+            source_parts.append(f"Pasal {pasal}")
+        source_info = " | ".join(source_parts)
+        parts.append(f"[{source_info}]\n{doc.page_content}")
     return "\n\n---\n\n".join(parts)
 
 
