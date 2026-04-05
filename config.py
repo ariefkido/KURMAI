@@ -39,7 +39,7 @@ TOP_K = 5                 # Jumlah chunk yang diambil per query
 # SETTINGS LLM
 # ============================================================
 GEMINI_MODEL = "gemini-2.0-flash"
-EMBEDDING_MODEL = "models/embedding-001"
+EMBEDDING_MODEL = "models/text-embedding-004"
 
 # ============================================================
 # SETTINGS UI
